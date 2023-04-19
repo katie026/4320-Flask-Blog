@@ -1,5 +1,8 @@
 import sqlite3
 from flask import Flask, render_template, request, url_for, flash, redirect, abort
+# example: importing objects for Project 3A
+    # from stock_data import StockData
+    # from chart import ChartGenerator
 
 # make a Flask application object called app
 app = Flask(__name__)
@@ -118,5 +121,27 @@ def delete(id):
     #go to index page after delete
     return redirect(url_for('index'))
 
+# route for the stock user input form
+@app.route('/stocks', methods=('GET', 'POST'))
+def stocks():
+    if request.method == "POST":
+        # get form data
+        symbol = request.form["symbol"]
+        chart_type = request.form["chart_type"]
+        
+        # validate form data and flash error message if error
+        if symbol == "":
+            flash("Symbol is required.")
+        elif(chart_type == ""):
+            flash("Chart Type is required.")
+        else:
+            # if no errors, query the API
+            # imported object examples
+                # sd = StockData()
+                # gc = ChartGenerator()
+
+            return render_template('stock.html')
+    
+    return render_template('stock.html')
 
 app.run(host="0.0.0.0")
